@@ -1,0 +1,52 @@
+{
+  "model": {
+    "model_type": "LSTM",
+    "input_size": 1,
+    "hidden_size": 128,
+    "output_size": 1,
+    "num_layers": 3,
+    "dropout": 0.3,
+    "bidirectional": false,
+    "attention_size": 64,
+    "kernel_size": 3,
+    "num_heads": 8,
+    "latent_size": 64
+  },
+  "training": {
+    "learning_rate": 0.0005,
+    "batch_size": 16,
+    "num_epochs": 15,
+    "optimizer": "Adam",
+    "loss_function": "MSE",
+    "patience": 7,
+    "min_delta": 1e-06,
+    "scheduler": null,
+    "scheduler_params": {},
+    "device": "auto",
+    "num_workers": 0,
+    "pin_memory": true,
+    "save_dir": "checkpoints",
+    "save_best_only": true
+  },
+  "data": {
+    "target_column": "Close",
+    "feature_columns": [
+      "Close"
+    ],
+    "sequence_length": 15,
+    "test_size": 40,
+    "normalize": true,
+    "data_path": "",
+    "train_data_path": "",
+    "test_data_path": ""
+  },
+  "prediction": {
+    "future_steps": 1,
+    "method": "recursive",
+    "confidence_intervals": false,
+    "n_samples": 100,
+    "output_dir": "predictions",
+    "save_predictions": true,
+    "save_plots": true
+  }
+}

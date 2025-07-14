@@ -1,0 +1,5 @@
+2025-07-13 14:47:32,790 - StockTrainer - INFO - 开始训练，共 1 轮
+2025-07-13 14:47:32,790 - StockTrainer - INFO - 设备: cpu
+2025-07-13 14:47:32,790 - StockTrainer - INFO - 模型: LSTMModel
+2025-07-13 14:47:32,832 - StockTrainer - INFO - Epoch 1/1 - Train Loss: 0.2776, Train Acc: 67.49% - Val Loss: 0.6074, Val Acc: 57.52%
+2025-07-13 14:47:32,832 - StockTrainer - INFO - 训练完成
