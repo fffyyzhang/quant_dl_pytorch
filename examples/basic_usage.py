@@ -24,7 +24,7 @@ def basic_training_example():
     set_seed(42)
     
     # 使用参考数据（需要将ref_codes中的数据复制到data目录）
-    data_path = '../ref_codes/Stock-Prediction-Models/dataset/GOOG-year.csv'
+    data_path = '/home/liyuan/proj_liy/quant_dl_pytorch/ref_codes/Stock-Prediction-Models/Good-year.csv'
     
     # 创建数据加载器
     train_loader, val_loader, preprocessor = create_loaders_from_file(
@@ -140,7 +140,8 @@ def main():
     """主函数"""
     try:
         # 检查数据文件是否存在
-        data_path = '../ref_codes/Stock-Prediction-Models/dataset/GOOG-year.csv'
+        #data_path = '../ref_codes/Stock-Prediction-Models/dataset/GOOG-year.csv'
+        data_path = '/home/liyuan/proj_liy/quant_dl_pytorch/ref_codes/Stock-Prediction-Models/Good-year.csv'
         if not os.path.exists(data_path):
             print(f"数据文件不存在: {data_path}")
             print("请确保参考代码中的数据文件可用")

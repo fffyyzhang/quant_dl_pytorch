@@ -12,7 +12,7 @@ from typing import Dict, List, Optional, Tuple, Union
 import logging
 from datetime import datetime, timedelta
 from ..data.preprocessor import StockPreprocessor
-from ..training.metrics import StockMetrics
+from ..train.metrics import StockMetrics
 
 
 class StockPredictor:
