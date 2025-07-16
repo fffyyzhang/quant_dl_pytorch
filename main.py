@@ -8,7 +8,7 @@
 import os
 import argparse
 import json
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import pandas as pd
 
 # 导入我们的包
@@ -24,7 +24,7 @@ from stock_prediction_pytorch.utils import Config, set_seed, get_device, print_s
 
 def create_model(config: Config):
     """
-    根据配置创建模型
+    根据配置创建模型 - 使用简化的模型创建方式
     
     Args:
         config: 配置对象
@@ -32,26 +32,37 @@ def create_model(config: Config):
     Returns:
         模型实例
     """
-    model_type = config.model.model_type.upper()
+    # 导入简化的模型创建工具
+    from models import create_model as create_model_simple, get_available_models
+    
+    model_type = config.model.model_type.lower()
     model_params = config.get_model_params()
     
     # 移除model_type参数
     model_params.pop('model_type', None)
     
-    if model_type == 'LSTM':
-        return LSTMModel(**model_params)
-    elif model_type == 'BILSTM':
-        return BiLSTMModel(**model_params)
-    elif model_type == 'GRU':
-        return GRUModel(**model_params)
-    elif model_type == 'TRANSFORMER':
-        return TransformerModel(**model_params)
-    elif model_type == 'CNN':
-        return CNNSeq2SeqModel(**model_params)
-    elif model_type == 'DILATEDCNN':
-        return DilatedCNNModel(**model_params)
-    else:
-        raise ValueError(f"不支持的模型类型: {model_type}")
+    # 使用简化的创建方式
+    try:
+        return create_model_simple(model_type, **model_params)
+    except ValueError:
+        # 如果简化方式失败，尝试原来的方式（向后兼容）
+        model_type = config.model.model_type.upper()
+        
+        if model_type == 'LSTM':
+            return LSTMModel(**model_params)
+        elif model_type == 'BILSTM':
+            return BiLSTMModel(**model_params)
+        elif model_type == 'GRU':
+            return GRUModel(**model_params)
+        elif model_type == 'TRANSFORMER':
+            return TransformerModel(**model_params)
+        elif model_type == 'CNN':
+            return CNNSeq2SeqModel(**model_params)
+        elif model_type == 'DILATEDCNN':
+            return DilatedCNNModel(**model_params)
+        else:
+            available = get_available_models()
+            raise ValueError(f"不支持的模型类型: {config.model.model_type}，可用模型: {available}")
 
 
 def train_model(config: Config, data_path: str, save_dir: str = 'checkpoints'):
@@ -139,7 +150,7 @@ def train_model(config: Config, data_path: str, save_dir: str = 'checkpoints'):
 
 def predict_prices(model_path: str, 
                   data_path: str, 
-                  config_path: str = None,
+                  config_path: Optional[str] = None,
                   output_dir: str = 'predictions',
                   future_steps: int = 30):
     """
